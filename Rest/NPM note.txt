@@ -1,0 +1,32 @@
+run commands on the project root folder
+1º
+- npm init -> cria o ficheiro package json em k dp ficam la as dependencias k o nosso projeto usa, nome do projeto etc..
+
+2ºinstall packages
+- npm i <packageName>
+
+- npm i install todsas as dependencias k estejam no package.json e ainda n estejam na pasta node_modules.
+- npm list -> mostra todas as dependencias do projecto e subdependecias associadas.
+- npm list --depth=0 -> list só as dependencias do nosso projeto.
+- npm view mongoose dependencies -> mostra as a parte depencias do projeto mongoose.
+- npm i mongoose@2.4.2 -> install that specific version of mongoose.
+- npm outdated -> show projects that have a more recent version on the npm repositories.
+- npm update -> update dependencies
+- npm i -g npm-check-updates -> install um novo comando "npm-check-updates" que automaticamente ve se ha updtes para o nosso projeto
+- npm-check-updates -> ver acima.
+- npm un mongoose -> unistall a package
+
+- npm i -g <packageName> -> install a package globaly. Not just for one project. (todos os comandos acima tb funcionam cm a flag golbal)
+
+- DevDepencies -> dependencias k n devem ir para produção são de desenvolviemnto.
+-  npm i jshint --save-dev -> grava este modeulo como dependencia de produção.
+
+---------------------------------------------------------------------------
+PUBLISH OUR PACKAGES ON NPM REGISTRY
+1º
+on package.josn MAKE SURE U HAVE AN UNIQUE NAME
+2º
+npm publish
+3º update version
+- npm version [<major>|<minor>]
+4º publis again with the new version to update de project.

@@ -1,0 +1,20 @@
+{
+  "name": "vidly",
+  "version": "1.0.0",
+  "description": "Back end to a video store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paulo Matos",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "joi": "^13.1.0",
+    "mongoose": "^5.9.10",
+    "underscore": "^1.10.2"
+  },
+  "devDependencies": {
+    "jshint": "^2.11.0"
+  }
+}
