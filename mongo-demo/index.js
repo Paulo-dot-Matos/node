@@ -81,24 +81,27 @@ async function updateFirstCourse(id){
 // Approach: Update first -> update directly
 
     
-const course = await Course.update({_id: id},{
+const result = await Course.update({_id: id},{
     // now we use mongo db update operators
-    
+    $set: {
+        author: 'Ricardo',
+        isPublished: false
+    }
 })
-console.log(`course is: ${course}`);
-if(!course) return;
-course.isPublished = true;
-course.author = "Paulo author";
-
-const result = await course.save();
 console.log(result);
 };
 
 
 
-updateFirstCourse();
+//updateFirstCourse('5ec292d5c08685568838fdb9');
 
+// delete
+async function removeCourse(id){
+    const result = await Course.deleteOne({_id: id})
+    console.log(result)
+}
 
+removeCourse('5ec292d5c08685568838fdb9')
 //getCourses();
 
 // cCOMPARISON OEPRATORS
