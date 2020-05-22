@@ -1,20 +1,18 @@
 {
   "name": "vidly",
   "version": "1.0.0",
-  "description": "Back end to a video store",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Paulo Matos",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.16.2",
+    "fawn": "^2.1.5",
     "joi": "^13.1.0",
-    "mongoose": "^5.9.10",
-    "underscore": "^1.10.2"
-  },
-  "devDependencies": {
-    "jshint": "^2.11.0"
+    "joi-objectid": "^2.0.0"
   }
 }

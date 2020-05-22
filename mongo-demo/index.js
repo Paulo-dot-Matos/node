@@ -7,13 +7,39 @@ mongoose.connect('mongodb://localhost/playground')
 // Create a schema
 const courseSchema = new mongoose.Schema(
     {
-        name: String,
+        name: {
+            type: String,
+            required: true,
+            minlength: 5,
+            maxlength: 255
+        },
+        category: {
+            type: String,
+            required: true,
+            enum: ['web','mobile','network']    
+        },
         author: String,
-        tags: [String],
+        tags: {
+            type: Array,
+            // custom validator
+            validate: {
+                validator: function (v){
+                    return v && v.length > 0 // reads: if v has a value and its length greater then 0
+                },
+                message: 'A course should have at least one tag.'
+            }
+
+        },
         date: {
             type: Date, default: Date.now
         },
-        isPublished: Boolean
+        isPublished: Boolean,
+        price: {
+            type: Number,
+            required: function(){return this.isPublished},
+            min: 10,
+            max: 200
+        }
     }
 )
 
@@ -24,17 +50,38 @@ const Course = mongoose.model('Course', courseSchema)
 async function createCourse(){
    
     const course = new Course({
-        name:'Angualr js course',
+        name:'.net course',
         author: 'Paulo',
-        tags:['angular','frontend'],
-        isPublished: true
+        category:'web',
+        tags:['frontend'],
+        isPublished: true,
+        price: 15
     })
+
+    // validade manually
+    // course.validate()
+    try{
+        const result = await course.save();
+        console.log(result)
+    } catch(ex){    
+        
+        for (field in ex.errors)
+            console.log(ex.errors[field].message)
+    }
     
-    
-    
-    const result = await course.save();
-    console.log(result)
 }
+
+createCourse()
+
+
+
+
+
+
+
+
+
+
 //get
 async function getCourses(){
     const pageNumber = 2

@@ -1,19 +1,24 @@
-const express = require('express');
+
 const Joi = require('joi');
+Joi.objectId= require('joi-objectid')(Joi);
+const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
+const express = require('express');
+const mongoose = require('mongoose')
 const app = express();
 
 app.use(express.json());
+app.use('/api/genres', genres);
+app.use('/api/customers', customers);
+app.use('/api/movies', movies)
+app.use('/api/rentals', rentals);
 
-const genres = [
-    {id: 1, name: 'terror'},
-    {id: 2, name: 'romance'},
-    {id: 3, name: 'action'}
-]
+// connect to the db
+mongoose.connect('mongodb://localhost/vidly')
+    .then(()=>console.log('connected to mongo db...'))
+    .catch(err=> console.error('Coul not connect to mongoDb...'))
 
-app.get('api/genres', (req, res) => {
-    app.send(genres);
-});
-
-
-
-
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on port ${port}...`));
