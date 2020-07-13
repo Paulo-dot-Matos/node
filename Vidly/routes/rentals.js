@@ -2,13 +2,11 @@ const {Rental, validate} = require('../models/rental');
 const {Movie} = require('../models/movie'); 
 const {Customer} = require('../models/customer'); 
 const mongoose = require('mongoose');
-// Fawn is a library that simulates transactions, using two phase commit tecnique.
-// As mongo db doesn have the concept of transaction like sql db.
-const Fawn = require('fawn') 
+const Fawn = require('fawn');
 const express = require('express');
 const router = express.Router();
 
-Fawn.init(mongoose)
+Fawn.init(mongoose);
 
 router.get('/', async (req, res) => {
   const rentals = await Rental.find().sort('-dateOut');
@@ -19,7 +17,6 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  
   const customer = await Customer.findById(req.body.customerId);
   if (!customer) return res.status(400).send('Invalid customer.');
 
@@ -41,21 +38,19 @@ router.post('/', async (req, res) => {
     }
   });
 
-  // We create a task object (like a transaction)
   try {
     new Fawn.Task()
-    .save('rentals', rental)
-    .update('movies', {_id: movie._id}, { $inc: {numberInStock: -1}})
-    .run()
-
+      .save('rentals', rental)
+      .update('movies', { _id: movie._id }, { 
+        $inc: { numberInStock: -1 }
+      })
+      .run();
+  
     res.send(rental);
-  } catch (err) {
-    console.log(err)
-    res.status(500).send('Something failds')
   }
-
-
-
+  catch(ex) {
+    res.status(500).send('Something failed.');
+  }
 });
 
 router.get('/:id', async (req, res) => {
